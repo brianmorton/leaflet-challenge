@@ -14,29 +14,31 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: API_KEY
   }).addTo(myMap);
 
-  url =  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson"
+  var url =  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson"
 
   // Grab the data with d3
 d3.json(url).then(function(response) {
 
-    // Create a new marker cluster group
-    var markers = L.markerClusterGroup();
+console.log(response.features)});
+
+    // // Create a new marker cluster group
+    // var markers = L.markerClusterGroup();
   
-    // Loop through data
-    for (var i = 0; i < response.length; i++) {
+    // // Loop through data
+    // for (var i = 0; i < response.length; i++) {
   
-      // Set the data location property to a variable
-      var location = response.features[i].geometry.coordinates;
+    //   // Set the data location property to a variable
+    //   var location = response.features[i].geometry.coordinates;
   
-      // Check for location property
-      if (location) {
+    //   // Check for location property
+    //   if (location) {
   
-        // Add a new marker to the cluster group and bind a pop-up
-        markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
-          .bindPopup(response.features[i].id));
-      }
+    //     // Add a new marker to the cluster group and bind a pop-up
+    //     markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
+    //       .bindPopup(response[i].features.id));
+    //   }
   
-    }
-  
-    // Add our marker cluster layer to the map
-    myMap.addLayer(markers);
+    // }
+
+    // // Add our marker cluster layer to the map
+    // myMap.addLayer(markers)};
