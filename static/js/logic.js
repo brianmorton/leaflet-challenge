@@ -1,7 +1,7 @@
 // Creating map object
 var myMap = L.map("mapid", {
     center: [37.1, -95.7],
-    zoom: 11
+    zoom: 6
   });
 
   // Adding tile layer to the map
@@ -10,7 +10,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/streets-v11",
+    id: "mapbox/light-v10",
     accessToken: API_KEY
   }).addTo(myMap);
 
@@ -19,26 +19,39 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   // Grab the data with d3
 d3.json(url).then(function(response) {
 
-console.log(response.features)});
+    // Loop through data
+    for (var i = 0; i < response.features.length; i++) {
+     
+      // Set the data to variables
+      var location = [response.features[i].geometry.coordinates[1],response.features[i].geometry.coordinates[0]];
+      var depth = response.features[i].geometry.coordinates[2]
+      var mag = response.features[i].properties.mag
+      var place = response.features[i].properties.place
+      var circleColor;
+      
+        if(depth > 250 ){
+          circleColor = '#FF0000';
+        }
+        if(depth > 200 && mag < 250){
+          circleColor = '#00FF00';
+        }
+        if(depth > 150 && mag < 200){
+          circleColor = '#0000FF';
+        }
+        if(depth > 100 && mag < 150 ){
+          circleColor = '#0000FF';
+        }
+        if(depth > 0 && mag < 100 ){
+          circleColor = '#FFFFFF';
+        }
+      }
+  
+L.circleMarker(location,{ 
+  color: "black",
+  fillColor: circleColor,
+  fillOpacity: 1,
+  radius:mag * 4,
+  }).bindPopup("<h3>" + place + "</h3>").addTo(myMap);
 
-    // // Create a new marker cluster group
-    // var markers = L.markerClusterGroup();
-  
-    // // Loop through data
-    // for (var i = 0; i < response.length; i++) {
-  
-    //   // Set the data location property to a variable
-    //   var location = response.features[i].geometry.coordinates;
-  
-    //   // Check for location property
-    //   if (location) {
-  
-    //     // Add a new marker to the cluster group and bind a pop-up
-    //     markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
-    //       .bindPopup(response[i].features.id));
-    //   }
-  
-    // }
-
-    // // Add our marker cluster layer to the map
-    // myMap.addLayer(markers)};
+  //add legend
+})
