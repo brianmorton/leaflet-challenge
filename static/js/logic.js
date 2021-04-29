@@ -36,16 +36,16 @@ d3.json(url).then(function(response) {
         if(depth > 250 ){
           circleColor = '#FF0000';
         }
-        if(depth > 200 && mag < 250){
+        if(depth > 200 && mag <= 250){
           circleColor = '#00FF00';
         }
-        if(depth > 150 && mag < 200){
+        if(depth > 150 && mag <= 200){
           circleColor = '#0000FF';
         }
-        if(depth > 100 && mag < 150 ){
+        if(depth > 100 && mag <= 150 ){
           circleColor = '#40E0D0';
         }
-        if(depth > 0 && mag < 100 ){
+        if(depth >= 0 && mag <= 100 ){
           circleColor = '#FFFFFF';
         }
       }
