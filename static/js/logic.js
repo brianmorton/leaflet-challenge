@@ -10,7 +10,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/street-v11",
+    id: "mapbox/streets-v11",
     accessToken: API_KEY
   }).addTo(myMap);
 
@@ -24,9 +24,9 @@ d3.json(url).then(function(response) {
      
       // Set the data to variables
       var location = [response.features[i].geometry.coordinates[1],response.features[i].geometry.coordinates[0]];
-      location = Number(location)
+      location = parseFloat(location)
       var depth = response.features[i].geometry.coordinates[2]
-      depth = Number(depth)
+      depth = parseFloat(depth)
       var mag = response.features[i].properties.mag
       var place = response.features[i].properties.place
       var cirColor;
@@ -48,7 +48,7 @@ d3.json(url).then(function(response) {
         if(depth >= 0 && mag <= 100 ){
           cirColor = '#FFFFFF';
         }
-      }
+      
   //console.log(circleColor)
 var circles = L.circleMarker([location],{ 
   color: "black",
@@ -58,7 +58,7 @@ var circles = L.circleMarker([location],{
   }).bindPopup("<h3>" + place + "</h3>").addTo(myMap);
 
   myMap.addLayer(circles)
-
+    }
   //add legend inside d3 
  
     var legend = L.control({ position: "bottomright" });
