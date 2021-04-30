@@ -10,7 +10,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/light-v10",
+    id: "mapbox/street-v11",
     accessToken: API_KEY
   }).addTo(myMap);
 
@@ -29,30 +29,30 @@ d3.json(url).then(function(response) {
       depth = Number(depth)
       var mag = response.features[i].properties.mag
       var place = response.features[i].properties.place
-      var circleColor;
+      var cirColor;
 
       
 
         if(depth > 250 ){
-          circleColor = '#FF0000';
+          cirColor = '#FF0000';
         }
         if(depth > 200 && mag <= 250){
-          circleColor = '#00FF00';
+          cirColor = '#00FF00';
         }
         if(depth > 150 && mag <= 200){
-          circleColor = '#0000FF';
+          cirColor = '#0000FF';
         }
         if(depth > 100 && mag <= 150 ){
-          circleColor = '#40E0D0';
+          cirColor = '#40E0D0';
         }
         if(depth >= 0 && mag <= 100 ){
-          circleColor = '#FFFFFF';
+          cirColor = '#FFFFFF';
         }
       }
   //console.log(circleColor)
 var circles = L.circleMarker([location],{ 
   color: "black",
-  fillColor: circleColor,
+  fillColor: cirColor,
   fillOpacity: 1,
   radius:mag * 4,
   }).bindPopup("<h3>" + place + "</h3>").addTo(myMap);
